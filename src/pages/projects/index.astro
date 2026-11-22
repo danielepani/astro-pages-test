@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => (b.data.year ?? 0) - (a.data.year ?? 0)
+);
+---
+
+<BaseLayout title="Progetti" description="Lista dei progetti gestiti tramite Pages CMS.">
+  <header class="page-header">
+    <span class="badge">Collezione · src/content/projects</span>
+    <h1>Progetti</h1>
+    <p>Una seconda collezione in Pages CMS con campi numerici, stato e liste di punti chiave.</p>
+  </header>
+
+  <div class="grid">
+    {
+      projects.map((project) => (
+        <a href={`/projects/${project.id}`} class="card">
+          {project.data.cover && (
+            <img
+              src={project.data.cover}
+              alt={project.data.title}
+              class="card-cover"
+              loading="lazy"
+            />
+          )}
+          <div class="card-body">
+            <div class="meta">
+              <span class="pill pill-accent">{project.data.status}</span>
+              {project.data.year && <span>{project.data.year}</span>}
+            </div>
+            <h3>{project.data.title}</h3>
+            <p>{project.data.summary}</p>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</BaseLayout>

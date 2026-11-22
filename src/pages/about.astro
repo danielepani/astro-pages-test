@@ -1,0 +1,42 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import site from '../data/site.json';
+
+const about = await getEntry('pages', 'about');
+if (!about) {
+  throw new Error('File src/content/pages/about.md non trovato');
+}
+const { Content } = await render(about);
+---
+
+<BaseLayout title={about.data.title} description={about.data.subtitle ?? site.description}>
+  <header class="page-header">
+    <span class="badge">File singolo · src/content/pages/about.md</span>
+    <h1>{about.data.title}</h1>
+    {about.data.subtitle && <p>{about.data.subtitle}</p>}
+  </header>
+
+  <div class="prose" style="margin-bottom: 3rem;">
+    <Content />
+  </div>
+
+  {
+    site.author && (
+      <div class="author-card">
+        {site.author.avatar && (
+          <img
+            src={site.author.avatar}
+            alt={site.author.name}
+            class="author-avatar"
+          />
+        )}
+        <div>
+          <h3>{site.author.name}</h3>
+          {site.author.role && <div class="author-role">{site.author.role}</div>}
+          <p>{site.author.bio}</p>
+        </div>
+      </div>
+    )
+  }
+</BaseLayout>

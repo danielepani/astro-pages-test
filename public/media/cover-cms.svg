@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#18181b"/>
+      <stop offset="55%" stop-color="#27272a"/>
+      <stop offset="100%" stop-color="#431407"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="78%" cy="28%" r="45%">
+      <stop offset="0%" stop-color="#f97316" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#f97316" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#g1)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <g stroke="#ffffff" stroke-opacity="0.08" stroke-width="1">
+    <path d="M0 126H1200M0 252H1200M0 378H1200M0 504H1200"/>
+    <path d="M200 0V630M400 0V630M600 0V630M800 0V630M1000 0V630"/>
+  </g>
+  <rect x="88" y="88" width="144" height="36" rx="18" fill="#f97316" fill-opacity="0.18" stroke="#f97316" stroke-opacity="0.5"/>
+  <text x="160" y="111" fill="#fdba74" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" text-anchor="middle" letter-spacing="1.5">PAGES CMS</text>
+  <text x="88" y="290" fill="#fafafa" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="700">Git-first Content</text>
+  <text x="88" y="356" fill="#a1a1aa" font-family="system-ui, -apple-system, sans-serif" font-size="26">Markdown, JSON e media direttamente sul tuo repo GitHub</text>
+  <rect x="88" y="430" width="220" height="8" rx="4" fill="#f97316"/>
+  <rect x="324" y="430" width="90" height="8" rx="4" fill="#3f3f46"/>
+</svg>

@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString('it-IT', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  });
+---
+
+<BaseLayout title="Blog" description="Tutti gli articoli pubblicati e gestiti tramite Pages CMS.">
+  <header class="page-header">
+    <span class="badge">Collezione · src/content/posts</span>
+    <h1>Blog</h1>
+    <p>Articoli gestiti dalla collezione <code>posts</code> in Pages CMS. Le bozze (<code>draft: true</code>) vengono nascoste automaticamente.</p>
+  </header>
+
+  <div class="grid">
+    {
+      posts.map((post) => (
+        <a href={`/blog/${post.id}`} class="card">
+          {post.data.cover && (
+            <img
+              src={post.data.cover}
+              alt={post.data.title}
+              class="card-cover"
+              loading="lazy"
+            />
+          )}
+          <div class="card-body">
+            <div class="meta">
+              <span class="pill">{post.data.category}</span>
+              {post.data.featured && (
+                <span class="pill pill-accent">In evidenza</span>
+              )}
+              <span>{formatDate(post.data.pubDate)}</span>
+            </div>
+            <h3>{post.data.title}</h3>
+            <p>{post.data.description}</p>
+            {(post.data.tags ?? []).length > 0 && (
+              <div class="tags">
+                {(post.data.tags ?? []).map((tag) => (
+                  <span class="tag">#{tag}</span>
+                ))}
+              </div>
+            )}
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</BaseLayout>

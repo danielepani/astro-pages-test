@@ -1,0 +1,187 @@
+media:
+  input: public/media
+  output: /media
+  categories: [image]
+
+content:
+  - name: posts
+    label: Articoli Blog
+    type: collection
+    path: src/content/posts
+    filename: "{year}-{month}-{day}-{primary}.md"
+    view:
+      fields: [title, category, pubDate, featured, draft]
+      primary: title
+      sort: [pubDate, title, category]
+      default:
+        sort: pubDate
+        order: desc
+    fields:
+      - name: title
+        label: Titolo
+        type: string
+        required: true
+      - name: description
+        label: Descrizione breve
+        type: text
+        required: true
+      - name: pubDate
+        label: Data di pubblicazione
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: category
+        label: Categoria
+        type: select
+        default: Note
+        options:
+          values:
+            - Guide
+            - Design
+            - Tech
+            - Note
+      - name: tags
+        label: Tag
+        type: string
+        list: true
+      - name: cover
+        label: Immagine di copertina
+        type: image
+      - name: featured
+        label: In evidenza
+        type: boolean
+        default: false
+      - name: draft
+        label: Bozza
+        type: boolean
+        default: false
+      - name: body
+        label: Contenuto
+        type: rich-text
+
+  - name: projects
+    label: Progetti
+    type: collection
+    path: src/content/projects
+    filename: "{primary}.md"
+    view:
+      fields: [title, year, status]
+      primary: title
+      sort: [year, title]
+      default:
+        sort: year
+        order: desc
+    fields:
+      - name: title
+        label: Nome progetto
+        type: string
+        required: true
+      - name: summary
+        label: Sommario
+        type: text
+        required: true
+      - name: year
+        label: Anno
+        type: number
+        default: 2026
+      - name: status
+        label: Stato
+        type: select
+        default: Attivo
+        options:
+          values:
+            - Attivo
+            - In corso
+            - Archiviato
+      - name: link
+        label: Link esterno
+        type: string
+      - name: cover
+        label: Immagine
+        type: image
+      - name: highlights
+        label: Punti chiave
+        type: string
+        list: true
+      - name: body
+        label: Descrizione completa
+        type: rich-text
+
+  - name: about
+    label: Pagina Chi Siamo
+    type: file
+    path: src/content/pages/about.md
+    fields:
+      - name: title
+        label: Titolo
+        type: string
+        required: true
+      - name: subtitle
+        label: Sottotitolo
+        type: text
+      - name: body
+        label: Contenuto
+        type: rich-text
+
+  - name: site
+    label: Impostazioni Sito
+    type: file
+    path: src/data/site.json
+    fields:
+      - name: title
+        label: Nome del sito
+        type: string
+        required: true
+      - name: tagline
+        label: Tagline
+        type: string
+      - name: description
+        label: Meta descrizione
+        type: text
+      - name: hero
+        label: Sezione Hero
+        type: object
+        fields:
+          - name: badge
+            label: Badge
+            type: string
+          - name: headline
+            label: Titolo principale
+            type: string
+          - name: subheadline
+            label: Sottotitolo
+            type: text
+          - name: ctaText
+            label: Testo pulsante
+            type: string
+          - name: ctaUrl
+            label: URL pulsante
+            type: string
+      - name: author
+        label: Autore
+        type: object
+        fields:
+          - name: name
+            label: Nome
+            type: string
+          - name: role
+            label: Ruolo
+            type: string
+          - name: bio
+            label: Bio
+            type: text
+          - name: avatar
+            label: Avatar
+            type: image
+      - name: social
+        label: Link Social
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: Etichetta
+            type: string
+          - name: url
+            label: URL
+            type: string

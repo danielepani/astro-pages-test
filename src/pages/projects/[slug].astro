@@ -1,0 +1,66 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<BaseLayout title={project.data.title} description={project.data.summary}>
+  <a href="/projects" class="back-link">← Torna ai progetti</a>
+
+  <article>
+    <header class="page-header">
+      <div class="meta">
+        <span class="pill pill-accent">{project.data.status}</span>
+        {project.data.year && <span>{project.data.year}</span>}
+      </div>
+      <h1>{project.data.title}</h1>
+      <p>{project.data.summary}</p>
+      {
+        project.data.link && (
+          <div style="margin-top: 1.15rem;">
+            <a href={project.data.link} target="_blank" rel="noreferrer" class="btn">
+              Visita progetto ↗
+            </a>
+          </div>
+        )
+      }
+    </header>
+
+    {
+      project.data.cover && (
+        <img
+          src={project.data.cover}
+          alt={project.data.title}
+          class="article-cover"
+        />
+      )
+    }
+
+    {
+      (project.data.highlights ?? []).length > 0 && (
+        <div class="highlights-box">
+          <h2>Punti chiave</h2>
+          <ul>
+            {(project.data.highlights ?? []).map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

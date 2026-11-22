@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#14532d"/>
+      <stop offset="50%" stop-color="#064e3b"/>
+      <stop offset="100%" stop-color="#09090b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#g3)"/>
+  <rect x="96" y="110" width="1008" height="410" rx="24" fill="#09090b" fill-opacity="0.55" stroke="#34d399" stroke-opacity="0.35"/>
+  <circle cx="144" cy="156" r="8" fill="#fb7185"/>
+  <circle cx="172" cy="156" r="8" fill="#fbbf24"/>
+  <circle cx="200" cy="156" r="8" fill="#34d399"/>
+  <text x="144" y="275" fill="#ecfdf5" font-family="system-ui, -apple-system, sans-serif" font-size="48" font-weight="700">WaaS Starter Lab</text>
+  <text x="144" y="335" fill="#a7f3d0" font-family="system-ui, -apple-system, sans-serif" font-size="24">Progetto dimostrativo per il flusso GitHub → Pages CMS → Deploy</text>
+</svg>

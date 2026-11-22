@@ -1,0 +1,32 @@
+{
+  "title": "Pages Lab",
+  "tagline": "Minisito Astro + Pages CMS",
+  "description": "Un minisito di test costruito con Astro e configurato per essere modificato interamente tramite Pages CMS su GitHub.",
+  "hero": {
+    "badge": "Astro 5 + Pages CMS",
+    "headline": "Gestisci i contenuti del tuo sito direttamente da GitHub.",
+    "subheadline": "Modifica articoli, progetti, pagina Chi Siamo, immagini e impostazioni globali da Pages CMS senza database né backend.",
+    "ctaText": "Esplora gli articoli",
+    "ctaUrl": "/blog"
+  },
+  "author": {
+    "name": "Daniele",
+    "role": "Web Developer & Builder",
+    "bio": "Sperimento architetture statiche, Website-as-a-Service e flussi Git-based per siti veloci e facili da aggiornare.",
+    "avatar": "/media/avatar.svg"
+  },
+  "social": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com"
+    },
+    {
+      "label": "Pages CMS",
+      "url": "https://pagescms.org"
+    },
+    {
+      "label": "Astro",
+      "url": "https://astro.build"
+    }
+  ]
+}

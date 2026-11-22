@@ -1,0 +1,128 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import site from '../data/site.json';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => (b.data.year ?? 0) - (a.data.year ?? 0)
+);
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString('it-IT', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  });
+---
+
+<BaseLayout>
+  <section class="hero">
+    {site.hero?.badge && <span class="badge">{site.hero.badge}</span>}
+    <h1>{site.hero?.headline}</h1>
+    <p>{site.hero?.subheadline}</p>
+    {
+      site.hero?.ctaText && (
+        <a href={site.hero.ctaUrl || '/blog'} class="btn">
+          {site.hero.ctaText} →
+        </a>
+      )
+    }
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2>Ultimi articoli</h2>
+      <a href="/blog" class="section-link">Tutti gli articoli →</a>
+    </div>
+    <div class="grid">
+      {
+        posts.slice(0, 3).map((post) => (
+          <a href={`/blog/${post.id}`} class="card">
+            {post.data.cover && (
+              <img
+                src={post.data.cover}
+                alt={post.data.title}
+                class="card-cover"
+                loading="lazy"
+              />
+            )}
+            <div class="card-body">
+              <div class="meta">
+                <span class="pill">{post.data.category}</span>
+                {post.data.featured && (
+                  <span class="pill pill-accent">In evidenza</span>
+                )}
+                <span>{formatDate(post.data.pubDate)}</span>
+              </div>
+              <h3>{post.data.title}</h3>
+              <p>{post.data.description}</p>
+              {(post.data.tags ?? []).length > 0 && (
+                <div class="tags">
+                  {(post.data.tags ?? []).map((tag) => (
+                    <span class="tag">#{tag}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2>Progetti</h2>
+      <a href="/projects" class="section-link">Vedi tutti →</a>
+    </div>
+    <div class="grid">
+      {
+        projects.slice(0, 3).map((project) => (
+          <a href={`/projects/${project.id}`} class="card">
+            {project.data.cover && (
+              <img
+                src={project.data.cover}
+                alt={project.data.title}
+                class="card-cover"
+                loading="lazy"
+              />
+            )}
+            <div class="card-body">
+              <div class="meta">
+                <span class="pill pill-accent">{project.data.status}</span>
+                {project.data.year && <span>{project.data.year}</span>}
+              </div>
+              <h3>{project.data.title}</h3>
+              <p>{project.data.summary}</p>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  {
+    site.author && (
+      <section class="section">
+        <div class="author-card">
+          {site.author.avatar && (
+            <img
+              src={site.author.avatar}
+              alt={site.author.name}
+              class="author-avatar"
+            />
+          )}
+          <div>
+            <h3>{site.author.name}</h3>
+            {site.author.role && <div class="author-role">{site.author.role}</div>}
+            <p>{site.author.bio}</p>
+          </div>
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>

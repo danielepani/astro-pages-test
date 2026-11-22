@@ -1,0 +1,60 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const formattedDate = post.data.pubDate.toLocaleDateString('it-IT', {
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <a href="/blog" class="back-link">← Torna al blog</a>
+
+  <article>
+    <header class="page-header">
+      <div class="meta">
+        <span class="pill">{post.data.category}</span>
+        {post.data.featured && <span class="pill pill-accent">In evidenza</span>}
+        <time datetime={post.data.pubDate.toISOString()}>{formattedDate}</time>
+      </div>
+      <h1>{post.data.title}</h1>
+      <p>{post.data.description}</p>
+      {
+        (post.data.tags ?? []).length > 0 && (
+          <div class="tags" style="margin-top: 1rem;">
+            {(post.data.tags ?? []).map((tag) => (
+              <span class="tag">#{tag}</span>
+            ))}
+          </div>
+        )
+      }
+    </header>
+
+    {
+      post.data.cover && (
+        <img
+          src={post.data.cover}
+          alt={post.data.title}
+          class="article-cover"
+        />
+      )
+    }
+
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
